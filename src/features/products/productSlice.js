@@ -37,13 +37,40 @@ export const createProduct = createAsyncThunk(
         }
     }
 )
+// fetching products using the fetch method
+// export const fetchProducts = createAsyncThunk(
+//     'products/fetchProducts',
+//     async(_,thunkAPI)=>{
+//         try {
+//             const response = await fetch(API)
+//             const data = response.json()
+//             return data
+//         } catch (error) {
+//             return thunkAPI.rejectWithValue(error.message)
+//         }
+//     }
+// )
+
+// fetch all the  products using axios
+export const fetchProducts = createAsyncThunk(
+    'products/fetchProducts',
+    async (_,thunkAPI) => {
+try {
+            const response = await axios.get(API)
+        return response.data
+} catch (error) {
+    return thunkAPI.rejectWithValue(error.message)
+}
+    }
+)
 
 const productSlice = createSlice({
     name:'products',
     initialState:{
         products:[],
         status:'idle', // loading, suceeded, failed
-        error:null
+        error:null,
+        // godwin:null
     },
     reducers:{},
     extraReducers:(builder)=>{
@@ -58,6 +85,19 @@ const productSlice = createSlice({
             state.products.push(action.payload)
         })
         .addCase(createProduct.rejected,(state,action)=>{
+            state.status = 'failed'
+            state.error = action.payload
+        })
+        // fetch all products
+        .addCase(fetchProducts.pending,(state)=>{
+            state.status = 'loading'
+            state.error = null
+        })
+        .addCase(fetchProducts.fulfilled,(state,action)=>{
+            state.status = 'succeeded'
+            state.products.push(action.payload)
+        })
+        .addCase(fetchProducts.rejected, (state,action)=>{
             state.status = 'failed'
             state.error = action.payload
         })
