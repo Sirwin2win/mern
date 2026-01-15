@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { act } from "react";
 
 
 const API = 'https://node-apis-vnla.onrender.com/api/products'
@@ -64,13 +65,27 @@ try {
     }
 )
 
+// delete a product
+
+export const deleteProduct = createAsyncThunk(
+    'products/deleteProduct',
+    async(id,thunkAPI)=>{
+        try {
+         await axios.delete(`${API}/${id}`)
+         return id;
+
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error.message)
+        }
+    }
+)
 const productSlice = createSlice({
     name:'products',
     initialState:{
         products:[],
         status:'idle', // loading, suceeded, failed
         error:null,
-        // godwin:null
+        // godwin:null`
     },
     reducers:{},
     extraReducers:(builder)=>{
@@ -95,9 +110,23 @@ const productSlice = createSlice({
         })
         .addCase(fetchProducts.fulfilled,(state,action)=>{
             state.status = 'succeeded'
-            state.products.push(action.payload)
+            state.products = action.payload
         })
         .addCase(fetchProducts.rejected, (state,action)=>{
+            state.status = 'failed'
+            state.error = action.payload
+        })
+        // delete product
+        .addCase(deleteProduct.pending,(state)=>{
+            state.status = 'loading'
+            state.error = null
+        })
+        .addCase(deleteProduct.fulfilled,(state,action)=>{
+            state.status = 'secceeded'
+            const id = action.payload
+            state.products = state.products.filter(v=> v._id !== id)
+        })
+        .addCase(deleteProduct.rejected,(state,action)=>{
             state.status = 'failed'
             state.error = action.payload
         })

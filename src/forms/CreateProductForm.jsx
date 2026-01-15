@@ -1,9 +1,13 @@
 import React,{useState} from 'react'
 import { createProduct } from '../features/products/productSlice'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+
+
 
 
 const CreateProductForm = () => {
+  const {status} = useSelector(state=>state.products)
   // initialize states
   const [image, setImage] = useState(false)
   const [inputs,setInputs] = useState({
@@ -13,6 +17,7 @@ const CreateProductForm = () => {
   })
   // initialize useDispatch
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   // onChange event handler
   const handleChange = (e)=>{
     const name = e.target.name
@@ -31,6 +36,10 @@ const CreateProductForm = () => {
     formData.append("image",image);
     console.log(formData)
     dispatch(createProduct(formData))
+    if(status==='succeeded'){
+      navigate('/product')
+    }
+
 
   }
   return (

@@ -10,6 +10,9 @@ import Product from './pages/Product'
 import CreateProductForm from './forms/CreateProductForm'
 import { Provider } from 'react-redux'
 import store from './features/store/store'
+import DetailPage from './components/DetailPage'
+import ProductTable from './components/ProductTable'
+import EditProduct from './components/EditProduct'
 
 
 
@@ -24,6 +27,9 @@ const App = () => {
       <Route path='/contact' element={<Contact />} />
       <Route path='/product' element={<Product />} />
       <Route path='/create-product' element={<CreateProductForm />} />
+      <Route path='/product/:id' element={<DetailPage />} />
+      <Route path='/product-table' element={<ProductTable />} />
+      <Route path='/edit-product/:id' element={<EditProduct />} />
       </Route>
     </Routes>
     </BrowserRouter>
