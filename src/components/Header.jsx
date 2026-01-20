@@ -30,6 +30,10 @@ const Header = () => {
             <li><Link className="dropdown-item" to="/create-product">Create Product</Link></li>
             <li><Link className="dropdown-item" to="/product-table">Product Table</Link></li>
             <li><hr className="dropdown-divider" /></li>
+            <li><Link className="dropdown-item" to="/register">Register</Link></li>
+            <li><hr className="dropdown-divider" /></li>
+            <li><Link className="dropdown-item" to="/login">Login</Link></li>
+            <li><hr className="dropdown-divider" /></li>
             <li><Link className="dropdown-item" to="#">Something else here</Link></li>
           </ul>
         </li>

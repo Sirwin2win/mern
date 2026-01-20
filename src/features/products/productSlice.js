@@ -79,6 +79,18 @@ export const deleteProduct = createAsyncThunk(
         }
     }
 )
+// update Products
+export const update = createAsyncThunk(
+    'products/update',
+    async({id, formData},thunkAPI)=>{
+        try {
+            const res = await axios.put(`${API}/${id}`,formData)
+        return res.data
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error.message)
+        }
+    }
+)
 const productSlice = createSlice({
     name:'products',
     initialState:{
@@ -127,6 +139,24 @@ const productSlice = createSlice({
             state.products = state.products.filter(v=> v._id !== id)
         })
         .addCase(deleteProduct.rejected,(state,action)=>{
+            state.status = 'failed'
+            state.error = action.payload
+        })
+
+        // update product
+        .addCase(update.pending,(state)=>{
+            state.status = 'loading'
+            state.error = null
+        })
+        .addCase(update.fulfilled, (state,action)=>{
+            state.status = 'succeeded'
+            const updated = action.payload
+            const index = state.products.findIndex(v=>v._id===updated._id)
+            if(index !==-1){
+                state.products[index] = updated
+            }
+        })
+        .addCase(update.rejected,(state,action)=>{
             state.status = 'failed'
             state.error = action.payload
         })

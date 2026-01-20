@@ -13,6 +13,8 @@ import store from './features/store/store'
 import DetailPage from './components/DetailPage'
 import ProductTable from './components/ProductTable'
 import EditProduct from './components/EditProduct'
+import RegisterForm from './forms/RegisterForm'
+import LoginForm from './forms/LoginForm'
 
 
 
@@ -30,6 +32,8 @@ const App = () => {
       <Route path='/product/:id' element={<DetailPage />} />
       <Route path='/product-table' element={<ProductTable />} />
       <Route path='/edit-product/:id' element={<EditProduct />} />
+      <Route path='/register' element={<RegisterForm />} />
+      <Route path='/login' element={<LoginForm />} />
       </Route>
     </Routes>
     </BrowserRouter>

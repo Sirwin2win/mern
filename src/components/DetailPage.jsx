@@ -24,15 +24,16 @@ const DetailPage = () => {
         return <h1>Loading...</h1>
     }
   return (
-    <div>
-        <h1>Hello Details</h1>
+    <div className='container'>
+        <h1 className='text-center text-primary'>Hello Details</h1>
         <div className="row">
-            <div className="col-sm-4">
+            <div className="col-sm-4 my-3">
             <img src={`https://node-apis-vnla.onrender.com/${product.image}`} alt="" />
             </div>
-            <div className="col-sm-6">
+            <div className="col-sm-4 mt-4" style={{marginLeft:'-150px'}}>
             <h5>{product.title}</h5>
             <p>{product.description}</p>
+            <span>${product.price}</span>
             </div>
 
         </div>

@@ -1,16 +1,54 @@
-import React, {useState} from 'react'
-import { useParams } from 'react-router-dom'
+import React, {useState,useEffect} from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
+import { update } from '../features/products/productSlice'
+import { fetchSingle } from '../features/products/singleSlice'
+import { useDispatch, useSelector } from 'react-redux'
+
+
 
 const EditProduct = () => {
     const {id} = useParams()
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+    const [image, setImage] = useState(false)
     const [inputs, setInputs] = useState({
-
+      title:"",
+      description:'',
+      price:''
     })
-    const handleChange=()=>{
-        
-    }
-    const handleSubmit=()=>{
+    const {product,status,error} = useSelector(state=>state.product)
 
+     useEffect(()=>{
+            if(id){
+               dispatch(fetchSingle(id)) 
+            }
+        },[])
+
+      useEffect(()=>{
+        if(product){
+          setInputs({
+            title:product.title || "",
+            description:product.description || "",
+            price:product.price || "",
+            // image:product.image || "",
+          })
+        }
+      },[product])
+    const handleChange=(e)=>{
+        const name = e.target.name
+        const value = e.target.value
+        setInputs((inputs=>({...inputs,[name]:value})))
+    }
+    const handleSubmit=(e)=>{
+      e.preventDefault()
+      const formData = new FormData()
+      formData.append("title",inputs.title);
+      formData.append("description",inputs.description);
+      formData.append("price",inputs.price);
+      formData.append("image",image);
+      console.log(`${inputs.title}`)
+      dispatch(update(formData))
+      navigate('/product')
     }
   return (
     <div>
