@@ -29,13 +29,21 @@ async(forms, thunkAPI)=>{
 }
 )
 
+// Logout user
+export const logout = createAsyncThunk(
+    'auth/logout',
+    async()=>{
+        localStorage.removeItem('token')
+    }
+)
+
 const authSlice = createSlice({
     name:'auth',
     initialState:{
         users:[],
         status:'idle',
         error:null,
-        user:null
+        user:0
     },
     reducers:{},
     extraReducers:(builder)=>{
@@ -62,10 +70,11 @@ const authSlice = createSlice({
             const {token} = action.payload
             try {
                 const decoded = jwtDecode(token)
-                state.user ={
-                    id:decoded._id,
-                    token,
-                }
+                // state.user ={
+                //     id:decoded.id,
+                //     token,
+                // }
+                state.user = decoded.id
                 localStorage.setItem('token',token)
             } catch (error) {
                 state.error = error.message
@@ -74,6 +83,12 @@ const authSlice = createSlice({
         .addCase(login.rejected,(state,action)=>{
             state.status = 'failed'
             state.error = action.payload
+        })
+        // Logout
+        .addCase(logout.fulfilled,(state)=>{
+            state.user = null
+            state.token = null
+            state.status = 'idle'
         })
     }
 })

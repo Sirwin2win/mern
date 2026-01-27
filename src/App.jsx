@@ -15,6 +15,7 @@ import ProductTable from './components/ProductTable'
 import EditProduct from './components/EditProduct'
 import RegisterForm from './forms/RegisterForm'
 import LoginForm from './forms/LoginForm'
+import CartPage from './components/CartPage'
 
 
 
@@ -34,6 +35,7 @@ const App = () => {
       <Route path='/edit-product/:id' element={<EditProduct />} />
       <Route path='/register' element={<RegisterForm />} />
       <Route path='/login' element={<LoginForm />} />
+      <Route path='/cart' element={<CartPage />} />
       </Route>
     </Routes>
     </BrowserRouter>

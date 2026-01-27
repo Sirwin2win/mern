@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { act } from "react";
+// import { act } from "react";
 
 
 const API = 'https://node-apis-vnla.onrender.com/api/products'
@@ -26,7 +26,7 @@ const API = 'https://node-apis-vnla.onrender.com/api/products'
 //         }
 //     }
 // )
-// create product using axios
+// create product using axios dispatch(createProduct(formData))
 export const createProduct = createAsyncThunk(
     'products/createProduct',
     async(formData,thunkAPI)=>{
@@ -79,7 +79,7 @@ export const deleteProduct = createAsyncThunk(
         }
     }
 )
-// update Products
+// update Products on the server
 export const update = createAsyncThunk(
     'products/update',
     async({id, formData},thunkAPI)=>{

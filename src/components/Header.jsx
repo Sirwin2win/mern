@@ -1,8 +1,14 @@
 import React from 'react'
 import { Link} from 'react-router-dom'
+import { IoLogOutOutline } from "react-icons/io5";
+import { logout } from '../features/auth/authSlice';
+import { useDispatch } from 'react-redux';
+
+
 
 
 const Header = () => {
+  const dispatch = useDispatch()
   return (
     <div>
         <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -34,7 +40,7 @@ const Header = () => {
             <li><hr className="dropdown-divider" /></li>
             <li><Link className="dropdown-item" to="/login">Login</Link></li>
             <li><hr className="dropdown-divider" /></li>
-            <li><Link className="dropdown-item" to="#">Something else here</Link></li>
+            <li><IoLogOutOutline size={50} className='text-danger' onClick={()=>dispatch(logout())} /></li>
           </ul>
         </li>
         <li className="nav-item">

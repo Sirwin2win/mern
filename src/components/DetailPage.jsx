@@ -2,6 +2,8 @@ import React, {useEffect} from 'react'
 import { useParams } from 'react-router-dom'
 import { fetchSingle } from '../features/products/singleSlice'
 import { useDispatch, useSelector } from 'react-redux'
+import { addToCart } from '../features/cart/cartSlice'
+
 
 
 
@@ -19,7 +21,7 @@ const DetailPage = () => {
            dispatch(fetchSingle(id)) 
         }
     },[])
-    console.log(product)
+    // console.log(product)
     if(status==='loading'){
         return <h1>Loading...</h1>
     }
@@ -30,10 +32,12 @@ const DetailPage = () => {
             <div className="col-sm-4 my-3">
             <img src={`https://node-apis-vnla.onrender.com/${product.image}`} alt="" />
             </div>
-            <div className="col-sm-4 mt-4" style={{marginLeft:'-150px'}}>
+            <div className="col-sm-4 mt-4" >
             <h5>{product.title}</h5>
             <p>{product.description}</p>
-            <span>${product.price}</span>
+            <span className='mb-5'>${product.price}</span>
+            <br />
+            <button className='mt-2 btn btn-primary' onClick={()=>dispatch(addToCart(product))}>Add To Cart</button>
             </div>
 
         </div>

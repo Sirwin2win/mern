@@ -5,13 +5,18 @@ import { Link } from 'react-router-dom'
 
 const Product = () => {
   const {products, status, error} = useSelector(state=> state.products)
+  const {user,status:st} = useSelector(state=>state.auth)
   const dispatch = useDispatch()
-  
+  console.log(user)
   useEffect(()=>{
     if(status==='idle'){
       dispatch(fetchProducts())
     }
   },[status,dispatch])
+
+  if(st==='loading'){
+    return <h1>fetching User...</h1>
+  }
 
   if(status==='loading'){
     return <h1>Loading...</h1>
@@ -22,6 +27,7 @@ const Product = () => {
       <div className="row">
 
         <h1>Products Page</h1>
+        <p>{user}</p>
        {products.map((v)=>(
         <div className='col-sm-4' key={v._id}>
           {/* <img src={`https://node-apis-vnla.onrender.com/${v.image}`}
