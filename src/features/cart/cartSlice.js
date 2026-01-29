@@ -30,12 +30,12 @@ const products = [
 ]
 // const {products,status,error} = useSelector(state=>state.products)| products.map(product=>)
 const cartSlice = createSlice({
-    name:'cart',
+    name:'carts',
     initialState,
     reducers:{
        addToCart:(state,action)=>{
         const item = action.payload
-        const existingItem  = state.cartItems.find(v=>v.id===item.id)
+        const existingItem  = state.cartItems.find(v=>v._id===item._id)
         if(existingItem){
             existingItem.quantity +=1
         }else{
@@ -48,18 +48,18 @@ const cartSlice = createSlice({
        },
        removeFromCart:(state,action)=>{
         const id = action.payload
-        const item = state.cartItems.find((v)=>v.id==id)
+        const item = state.cartItems.find((v)=>v._id==id)
         if(item){
             state.totalAmount -= item.quantity * item.price
             state.totalQuantity -= item.quantity
         }
-        state.cartItems = state.cartItems.filter(v=>v.id !==id)
+        state.cartItems = state.cartItems.filter(v=>v._id !==id)
         // save to local storage
         saveStorage(state)
        },
        increaseCart:(state,action)=>{
         const id = action.payload
-        const item = state.cartItems.find(v=>v.id == id)
+        const item = state.cartItems.find(v=>v._id == id)
         if(item){
             item.quantity +=1
             state.totalQuantity +=1
@@ -70,14 +70,15 @@ const cartSlice = createSlice({
        },
        decreaseCart:(state,action)=>{
         const id = action.payload
-        const item = state.cartItems.find(v=>v.id==id)
+        console.log(id)
+        const item = state.cartItems.find(v=>v._id==id)
         if(item){
             item.quantity -=1
             state.totalQuantity -=1
             state.totalAmount -=item.price
         }
         if(item.quantity===0){
-            state.cartItems = state.cartItems.filter(v=>v.id !==id)
+            state.cartItems = state.cartItems.filter(v=>v._id !==id)
         }
         // save to local storage
         saveStorage(state)
@@ -86,6 +87,7 @@ const cartSlice = createSlice({
         state.cartItems =[]
         state.totalAmount = 0
         state.totalQuantity = 0
+        localStorage.removeItem('cartInfo')
        }
     }
 })

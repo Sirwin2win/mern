@@ -2,13 +2,17 @@ import React from 'react'
 import { Link} from 'react-router-dom'
 import { IoLogOutOutline } from "react-icons/io5";
 import { logout } from '../features/auth/authSlice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { FaCartArrowDown } from "react-icons/fa";
+
+
 
 
 
 
 const Header = () => {
   const dispatch = useDispatch()
+  const {totalQuantity} = useSelector(state=>state.carts)
   return (
     <div>
         <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -47,6 +51,10 @@ const Header = () => {
           <Link className="nav-link" to='/product' >Product</Link>
         </li>
       </ul>
+      <div style={{position:'relative'}}>
+              <Link to={'/cart'}><p style={{position:'absolute',left:35,fontWeight:'bold',color:'black'}}>{totalQuantity}</p></Link>
+      <FaCartArrowDown size={30}  className='mx-4 text-warning'/>
+      </div>
       <form className="d-flex" role="search">
         <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
         <button className="btn btn-outline-success" type="submit">Search</button>
