@@ -38,7 +38,8 @@ const LoginForm = () => {
         <label htmlFor="password">Password</label>
         <input type="password" value={inputs.password}  onChange={handleChange} className='form-control' id='password' name='password' placeholder='Password' />
        </div>
-       <input type="submit" onClick={handleSubmit} value='Login' className='form-control my-4 text-bg-primary' />
+       {/* <input type="submit" onClick={handleSubmit} value='Login' className='form-control my-4 text-bg-primary' /> */}
+       <button className='form-control my-4 text-bg-primary' onClick={handleSubmit}>{status==='loading'?'Login you in...':'Login'}</button>
        </form>
     </div>
   )

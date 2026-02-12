@@ -29,6 +29,18 @@ const CartPage = () => {
         console.log(checkout)
         dispatch(createOrder(checkout))
     }
+    // moving to the pay.jsx component with orderRef= 'ORD-1770890981565'
+    const orderRef = 'ORD-1770890981565'
+    useEffect(()=>{
+        if(orderRef){
+            navigate('/pay',{
+                state:{
+                    orderRef,
+                    totalAmount
+                }
+            })
+        }
+    },[orderRef,totalAmount,navigate])
     useEffect(()=>{
         if(!user){
             navigate('/login')
