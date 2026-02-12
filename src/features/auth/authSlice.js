@@ -76,6 +76,7 @@ const authSlice = createSlice({
                 // }
                 state.user = decoded.id
                 localStorage.setItem('token',token)
+                localStorage.setItem('user',state.user)
             } catch (error) {
                 state.error = error.message
             }
