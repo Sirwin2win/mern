@@ -10,7 +10,7 @@ const CartPage = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const {cartItems,totalQuantity,totalAmount} = useSelector(state=>state.carts)
-    const {orders,status,error} = useSelector(state=>state.orders)
+    const {orders,status,error,orderRef} = useSelector(state=>state.orders)
     // const {user} = useSelector(state=>state.auth)
     const user = localStorage.getItem('user')
 
@@ -28,9 +28,10 @@ const CartPage = () => {
         }
         console.log(checkout)
         dispatch(createOrder(checkout))
+
     }
     // moving to the pay.jsx component with orderRef= 'ORD-1770890981565'
-    const orderRef = 'ORD-1770890981565'
+    
     useEffect(()=>{
         if(orderRef){
             navigate('/pay',{

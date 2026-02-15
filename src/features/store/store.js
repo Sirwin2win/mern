@@ -4,6 +4,7 @@ import singleSlice from '../products/singleSlice'
 import authSlice from '../auth/authSlice'
 import cartSlice from '../cart/cartSlice'
 import orderSlice from '../order/orderSlice'
+import paymentSlice from '../pay/paymentSlice'
 
 const store = configureStore({
     reducer:{
@@ -11,7 +12,8 @@ const store = configureStore({
         product:singleSlice,
         auth:authSlice,
         carts:cartSlice,
-        orders:orderSlice
+        orders:orderSlice,
+        pay:paymentSlice
     }
 })
 
