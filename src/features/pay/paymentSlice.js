@@ -34,7 +34,7 @@ const paymentSlice = createSlice({
         })
         .addCase(addPay.fulfilled,(state,action)=>{
             state.status = 'succeeded'
-            state.paymentUrl = action.payload.link
+            state.paymentUrl = action.payload
         })
         .addCase(addPay.rejected,(state,action)=>{
             state.status = 'failed'

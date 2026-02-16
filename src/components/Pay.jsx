@@ -20,6 +20,8 @@ const Pay = () => {
 
     }
 
+    console.log(paymentUrl)
+
     useEffect(()=>{
       if(paymentUrl){
         window.open(paymentUrl,'_blank')
