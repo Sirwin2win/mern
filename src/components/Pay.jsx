@@ -31,7 +31,7 @@ const Pay = () => {
   return (
     <div>
         <h5>Pay Here</h5>
-        <button className='btn btn-primary m-5' onClick={handleSubmit}>Pay</button>
+        <button className='btn btn-primary m-5' onClick={handleSubmit}><span className='me-2'>Pay</span>{state.totalAmount}</button>
     </div>
   )
 }

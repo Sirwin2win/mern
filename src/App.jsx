@@ -17,6 +17,7 @@ import RegisterForm from './forms/RegisterForm'
 import LoginForm from './forms/LoginForm'
 import CartPage from './components/CartPage'
 import Pay from './components/Pay'
+import PaymentSuccess from './components/PaymentSuccess'
 
 
 
@@ -38,6 +39,7 @@ const App = () => {
       <Route path='/login' element={<LoginForm />} />
       <Route path='/cart' element={<CartPage />} />
       <Route path='/pay' element={<Pay />} />
+      <Route path='/payment-success' element={<PaymentSuccess />} />
       </Route>
     </Routes>
     </BrowserRouter>
