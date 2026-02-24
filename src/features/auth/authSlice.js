@@ -43,7 +43,8 @@ const authSlice = createSlice({
         users:[],
         status:'idle',
         error:null,
-        user:0
+        user:0,
+        exists:null
     },
     reducers:{},
     extraReducers:(builder)=>{
@@ -55,6 +56,7 @@ const authSlice = createSlice({
         .addCase(register.fulfilled, (state,action)=>{
             state.status = 'succeeded'
             state.error = null
+            state.exists = action.payload
         })
         .addCase(register.rejected,(state,action)=>{
             state.status = 'failed'

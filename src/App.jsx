@@ -18,6 +18,7 @@ import LoginForm from './forms/LoginForm'
 import CartPage from './components/CartPage'
 import Pay from './components/Pay'
 import PaymentSuccess from './components/PaymentSuccess'
+import PageNotFound from './components/PageNotFound'
 
 
 
@@ -40,6 +41,7 @@ const App = () => {
       <Route path='/cart' element={<CartPage />} />
       <Route path='/pay' element={<Pay />} />
       <Route path='/payment-success' element={<PaymentSuccess />} />
+      <Route path='*' element={<PageNotFound />} />
       </Route>
     </Routes>
     </BrowserRouter>

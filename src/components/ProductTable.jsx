@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteProduct, fetchProducts } from '../features/products/productSlice'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
+
 
 
 
@@ -10,7 +11,9 @@ import { FaEdit, FaTrashAlt } from "react-icons/fa";
 
 const ProductTable = () => {
       const {products, status, error} = useSelector(state=> state.products)
+      const {user} = useSelector(state=> state.auth)
       const dispatch = useDispatch()
+      const navigate = useNavigate()
       
       useEffect(()=>{
         if(status==='idle'){
@@ -21,7 +24,15 @@ const ProductTable = () => {
       if(status==='loading'){
         return <h1>Loading...</h1>
       }
-      console.log(products)
+    //   console.log(products)
+
+    useEffect(()=>{
+        if(!user){
+            navigate('/login')
+        }
+    },[user,navigate])
+
+
   return (
     <div className='container'>
         <h1>Product Table</h1>

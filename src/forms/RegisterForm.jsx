@@ -1,5 +1,5 @@
-import React,{useState} from 'react'
-import { useDispatch } from 'react-redux'
+import React,{useEffect, useState} from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { register } from '../features/auth/authSlice'
 import { useNavigate } from 'react-router-dom'
 
@@ -10,6 +10,7 @@ const RegisterForm = () => {
         email:'',
         password:''
     })
+    const {user,status,error,exists} = useSelector(state=> state.auth)
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
@@ -19,6 +20,12 @@ const RegisterForm = () => {
         setInputs(inputs=>({...inputs,[name]:value}))
     }
 
+    useEffect(()=>{
+        if(status==='succeeded' && exists !='User with the email already exists'){
+            navigate('/login')
+        }
+    },[status,navigate])
+
     const handleSubmit = (e)=>{
         e.preventDefault()
         dispatch(register(inputs))
@@ -27,7 +34,8 @@ const RegisterForm = () => {
   return (
      <div className='container'>
       <h1 className='text-primary text-center my-5'>Register User</h1>
-       <form method='post' encType='multipart/form-data'>
+      {status==='succeeded'&& <h3 className='text-danger'>{exists.msg}</h3>}
+       <form method='post'>
        <div className='mb-3'>
         <label htmlFor="name">Name</label>
         <input type="text" value={inputs.name} onChange={handleChange} className='form-control' id='name' name='name' placeholder='Full Name' />
@@ -40,7 +48,8 @@ const RegisterForm = () => {
         <label htmlFor="password">Password</label>
         <input type="password" value={inputs.password}  onChange={handleChange} className='form-control' id='password' name='password' placeholder='Password' />
        </div>
-       <input type="submit" onClick={handleSubmit} value='Register' className='form-control my-4 text-bg-primary' />
+       {/* <input type="submit" onClick={handleSubmit} value='Register' className='form-control my-4 text-bg-primary' /> */}
+       <button onClick={handleSubmit} value='Register' className='form-control my-4 text-bg-primary'>{status==='loading'?"Registering...":"Register"}</button>
        </form>
     </div>
   )

@@ -1,6 +1,6 @@
-import React, {useState} from 'react'
+import React, {useState,useEffect} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { login } from '../features/auth/authSlice'
 
 
@@ -11,8 +11,19 @@ const LoginForm = () => {
     password:''
   })
   const {user,status,error} = useSelector(state=>state.auth)
-  const dispatch = useDispatch()
+  const location = useLocation()
   const navigate = useNavigate()
+  const from = location.state?.from?.pathname || '/cart';
+  
+  const dispatch = useDispatch()
+
+  useEffect(()=>{
+    if(user){
+      navigate(from,{replace:true})
+    }
+  },[navigate,from,user])
+  
+  
   const handleChange = (e)=>{
     const name = e.target.name
     const value = e.target.value
@@ -21,9 +32,9 @@ const LoginForm = () => {
   const handleSubmit = (e)=>{
     e.preventDefault()
     dispatch(login(inputs))
-    if(status==='succeeded'){
-      navigate('/product-table')
-    }
+    // if(status==='succeeded'){
+    //   navigate('/product-table')
+    // }
     
   }
   return (
